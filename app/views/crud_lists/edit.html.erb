@@ -1,0 +1,10 @@
+<h1>Editing crud list</h1>
+
+<%= render "form", crud_list: @crud_list %>
+
+<br>
+
+<div>
+  <%= link_to "Show this crud list", @crud_list, class:"btn btn-secondary" %> |
+  <%= link_to "Back", crud_lists_path, class:"btn btn-dark" %>
+</div>

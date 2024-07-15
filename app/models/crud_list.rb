@@ -1,0 +1,2 @@
+class CrudList < ApplicationRecord
+end
