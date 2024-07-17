@@ -29,18 +29,18 @@
     
     <%= form.text_field :email,  class:"form-control", placeholder:"Email"   %>
   </div>
-  <br/>
-
-  <div class="field form-label">
-   
-    <%= form.text_field :phone,  class:"form-control", placeholder:"Phone"   %>
+  
+    <div class="mb-3">
+    <label for="sekolahSelect" class="form-label"></label>
+    <select id="sekolahSelect" class="form-select" name="crud_list[sekolah_id]">
+      <option>Sekolah dan jurusan</option>
+      <% @sekolahs.each do |sekolah| %>
+        <option value="<%= sekolah.id %>"><%= sekolah.title %> - <%= sekolah.jurusan %></option>
+      <% end %>
+    </select>
   </div>
-  <br/>
-
-  <div class="field form-label">
-    
-    <%= form.text_field :twitter,  class:"form-control", placeholder:"Twitter"   %>
-  </div>
+  
+ 
   <br/>
 
   <div>

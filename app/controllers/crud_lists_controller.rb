@@ -3,7 +3,8 @@ class CrudListsController < ApplicationController
 
   # GET /crud_lists or /crud_lists.json
   def index
-    @crud_lists = CrudList.all
+    @crud_lists = CrudList.includes(:sekolah).all
+    @sekolahs = Sekolah.all
   end
 
   # GET /crud_lists/1 or /crud_lists/1.json
@@ -13,15 +14,24 @@ class CrudListsController < ApplicationController
   # GET /crud_lists/new
   def new
     @crud_list = CrudList.new
+    @sekolahs = Sekolah.all
   end
 
   # GET /crud_lists/1/edit
   def edit
+    @crud = CrudList.find(params[:id])
+    @sekolahs = Sekolah.all
   end
 
   # POST /crud_lists or /crud_lists.json
   def create
     @crud_list = CrudList.new(crud_list_params)
+    @sekolahs = Sekolah.all
+   sekolah_id = crud_list_params[:sekolah_id]
+
+ 
+
+
 
     respond_to do |format|
       if @crud_list.save
@@ -65,6 +75,6 @@ class CrudListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def crud_list_params
-      params.require(:crud_list).permit(:first_name, :last_name, :email, :phone, :twitter)
+      params.require(:crud_list).permit(:first_name, :last_name, :email, :sekolah_id, :jurusan_id )
     end
 end

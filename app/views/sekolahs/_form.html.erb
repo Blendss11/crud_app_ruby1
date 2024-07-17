@@ -1,0 +1,37 @@
+<%= form_with(model: sekolah) do |form| %>
+  <% if sekolah.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(sekolahs.errors.count, "error") %> prohibited this sekolahs from being saved:</h2>
+
+      <ul>
+        <% sekolahs.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br/>
+
+  <div class="field form-label">
+   
+    <%= form.text_field :title, class:"form-control", placeholder:"Title" %>
+  </div>
+  <br/>
+
+  <div class="field form-label">
+   
+    <%= form.text_field :jurusan,  class:"form-control", placeholder:"Jurusan"  %>
+  </div>
+  <br/>
+
+  <div class="field form-label">
+    
+    <%= form.text_field :alamat,  class:"form-control", placeholder:"Alamat"   %>
+  </div>
+  <br/>
+
+  <div>
+    <%= form.submit class:"btn btn-primary" %>
+  </div>
+<% end %>

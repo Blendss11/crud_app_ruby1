@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sekolahs
   resources :crud_lists
   # get 'home/index'
    get 'home/about'

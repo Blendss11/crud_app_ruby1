@@ -1,0 +1,31 @@
+
+
+<h1>Sekolah Lists</h1>
+<br/>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Nama Sekolah</th>
+      <th>Jurusan</th>
+      <th>Alamat</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <% @sekolahs.each.with_index(1) do |sekolahs, index| %>
+      <tr>
+          <td><%= index %></td>
+        <td><%= sekolahs.title %></td>
+        <td><%= sekolahs.jurusan %></td>
+        <td><%= sekolahs.alamat %></td>
+        <td class="text-center"><%= link_to "Show", sekolahs, class:"btn btn-primary" %></td>
+        <td class="text-center"><%= link_to "Edit",  edit_sekolah_path(sekolahs), class:"btn btn-warning" %></td>
+        <td class="text-center"><%= link_to "Destroy", sekolahs, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Masukan Sekolah",  new_sekolah_path, class: "btn btn-secondary" %>
