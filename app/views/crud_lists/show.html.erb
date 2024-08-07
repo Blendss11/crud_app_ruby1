@@ -1,21 +1,20 @@
-
-
-
-
 <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-      <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold"><%=  @crud_list.first_name  %> <%= @crud_list.last_name %></h1>
-        <p class="lead"><%=  @crud_list.email  %>  </p>
-        <p class="lead"> <%=  @crud_list.sekolah.title  %>  </p>
-        <p class="lead">  <%=  @crud_list.sekolah.jurusan  %> </p>
-        <br>
-         <%= link_to "Edit this crud list", edit_crud_list_path(@crud_list), class:"btn btn-primary" %> |
-         <%= link_to "Back to crud lists", crud_lists_path, class:"btn btn-secondary" %>
-      </div>
-    </div>
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold"><%= @crud_list.first_name %> <%= @crud_list.last_name %></h1>
+    <p class="lead"><%= @crud_list.email %></p>
+    <p class="lead"><%= @crud_list.sekolah.title %></p>
+    <p class="lead"><%= @crud_list.sekolah.jurusan %></p>
+    <br>
+    
+    <% if user_signed_in? && current_user.admin? %>
+  <%= link_to 'Edit', edit_crud_list_path(@crud_list), class: "btn btn-warning" %>
+  <%= link_to 'Destroy', @crud_list, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+<% end %>
 
-<div>
+
+
+    <%= link_to "Back to crud lists", crud_lists_path, class: "btn btn-secondary", onclick: "window.location.reload(), window.location.href = '/crud_lists';" %>
+  </div>
  
 
-  
 </div>

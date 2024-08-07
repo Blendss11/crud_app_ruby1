@@ -1,0 +1,25 @@
+<%= form_for @project do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <br/>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :description %>
+    <br/>
+    <%= f.text_field :description, class: "form-control" %>
+  </div>
+  
+  <div id="tasks">
+    <%= f.fields_for :tasks do |task_form| %>
+      <%= render partial: 'projects/task_fields', locals: { f: task_form } %>
+    <% end %>
+  </div>
+  
+  <div class='links'>
+    <%= link_to_add_association 'Add task', f, :tasks, class: 'btn btn-secondary' %>
+  </div>
+  
+  <%= f.submit 'Save', class: 'btn btn-primary' %>
+<% end %>

@@ -1,0 +1,18 @@
+<div id="<%= dom_id project %>">
+  <p>
+    <strong>Name:</strong>
+    <%= project.name %>
+  </p>
+  <p>
+    <strong>Description:</strong>
+    <%= project.description %>
+  </p>
+  <h3>Tasks</h3>
+  <div id='tasks'>
+    <%= form_with(model: project, local: true) do |f| %>
+      <%= f.fields_for :tasks do |task| %>
+        <%= render partial: 'projects/task_fields', locals: { f: task } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

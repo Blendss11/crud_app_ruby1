@@ -1,8 +1,13 @@
 import Rails from "@rails/ujs"
-import { Turbo } from "@hotwired/turbo-rails"
+import Turbolinks from "turbolinks"
+import * as ActiveStorage from "@rails/activestorage"
 import "controllers"
+require("jquery")
+require("@nathanvda/cocoon")
 
 
 Rails.start()
-Turbo.start()
+ActiveStorage.start()
+Turbolinks.start()
 
+// start: Sidebar

@@ -1,4 +1,6 @@
 class SekolahsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_sekolah, only: %i[ show edit update destroy ]
 
   # GET /sekolahs or /sekolahs.json
@@ -61,6 +63,10 @@ class SekolahsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_sekolah
       @sekolah = Sekolah.find(params[:id])
+    end
+
+    def authorize_admin
+      redirect_to(root_path, alert: 'You are not authorized to perform this action.') unless current_user.admin?
     end
 
     # Only allow a list of trusted parameters through.

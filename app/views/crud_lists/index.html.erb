@@ -1,34 +1,66 @@
-<h1>CRUD Lists</h1>
-<br/>
+<p class='bg-green'><%= notice %></p>
 
-<table class="table table-striped table-bordered">
-  <thead class="table-dark">
-    <tr>
-      <th>#</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      
-      <th>Title Sekolah</th>
-      <th>Jurusan Sekolah</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <% @crud_lists.each.with_index(1) do |crud_list, index| %>
-      <tr>
-        <td><%= index %></td>
-        <td><%= crud_list.first_name %></td>
-        <td><%= crud_list.last_name %></td>
-        <td><%= crud_list.email %></td>
-        <td><%= crud_list.sekolah.present? ? crud_list.sekolah.title : '' %></td>
-        <td><%= crud_list.sekolah.present? ? crud_list.sekolah.jurusan : '' %></td>
-        <td class="text-center"><%= link_to "Show", crud_list, class:"btn btn-primary" %></td>
-        <td class="text-center"><%= link_to "Edit", edit_crud_list_path(crud_list), class:"btn btn-warning" %></td>
-        <td class="text-center"><%= link_to "Destroy", crud_list, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<br>
+<div class="w-full mb-6 ml-6">
+  <div class="border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md bg-gray-900 text-white">
+    <div class="flex justify-between mb-4 items-start">
+      <div class="font-medium">Student List</div>
+    </div>
+    <div class="flex items-center mb-4 order-tab bg-gray-900">
+      <button type="button" data-tab="order" data-tab-page="active" class="bg-gray-900 text-sm font-medium text-gray-400 py-2 px-4 rounded-tl-md rounded-bl-md hover:text-gray-600 active">Active</button>
+      <button type="button" data-tab="order" data-tab-page="completed" class="bg-gray-900 text-sm font-medium text-gray-400 py-2 px-4 hover:text-gray-600">Completed</button>
+      <button type="button" data-tab="order" data-tab-page="canceled" class="bg-gray-900 text-sm font-medium text-gray-400 py-2 px-4 rounded-tr-md rounded-br-md hover:text-gray-600">Canceled</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[640px]" data-tab-for="order" data-page="active">
+        <thead>
+          <tr>
+            <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">#</th>
+            <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">First Name</th>
+            <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">Last Name</th>
+            <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">Email</th>
+            <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">Asal Sekolah</th>
+            <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">Jurusan</th>
+            <% if user_signed_in? %>
+              <% if current_user.admin? %>
+                <th col="3" class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-900 text-left">Actions</th>
+              <% end %>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @crud_lists.each.with_index(1) do |crud_list, index| %>
+            <tr data-id="<%= crud_list.id %>">
+              <td class="py-2 px-4 border-b border-b-gray-50"><%= crud_list.id %></td>
+              <td class="py-2 px-4 border-b border-b-gray-50"><%= crud_list.first_name %></td>
+              <td class="py-2 px-4 border-b border-b-gray-50"><%= crud_list.last_name %></td>
+              <td class="py-2 px-4 border-b border-b-gray-50"><%= crud_list.email %></td>
+              <td class="py-2 px-4 border-b border-b-gray-50"><%= crud_list.sekolah.present? ? crud_list.sekolah.title : '' %></td>
+              <td class="py-2 px-4 border-b border-b-gray-50"><%= crud_list.sekolah.present? ? crud_list.sekolah.jurusan : '' %></td>
+              <% if user_signed_in? %>
+                <% if current_user.admin? %>
+                  <td class="py-2 px-4 border-b border-b-gray-50 text-center gap-36">
+                    <%= link_to 'Show', crud_list, class: "text-blue-500 hover:text-blue-700" %>
+                    <%= link_to 'Edit', edit_crud_list_path(crud_list), class: "text-yellow-500 hover:text-yellow-700 mx-2" %>
+                    <%= link_to 'Destroy', crud_list, method: :delete, data: { confirm: 'Are you sure?' }, class: "text-red-500 hover:text-red-700" %>
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <br>
+ <% if user_signed_in? %>
+  <% if current_user.admin? %>
+     <button class=" hover:bg-blue-700 text-white font-bold py-2 px-4  border border-white text-end">
+     <%= link_to "New CRUD", new_crud_list_path, class: "inline-block px-4 py-2 text-white  hover:bg-blue-700 text-end" %>
+     </button>
+  <% end %>
+<% end %>
+  </div>
+ 
+</div>
 
-<%= link_to "New crud list", new_crud_list_path, class: "btn btn-secondary" %>
+

@@ -1,80 +1,63 @@
 class CrudListsController < ApplicationController
-  before_action :set_crud_list, only: %i[ show edit update destroy ]
+  # load_and_authorize_resource
+  # # before_action :authenticate_user!
+  # before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
 
-  # GET /crud_lists or /crud_lists.json
   def index
     @crud_lists = CrudList.includes(:sekolah).all
     @sekolahs = Sekolah.all
+    authorize! :read, CrudList
   end
 
-  # GET /crud_lists/1 or /crud_lists/1.json
   def show
+    @crud_list = CrudList.find(params[:id])
+    authorize! :read, @crud_list
   end
 
-  # GET /crud_lists/new
   def new
     @crud_list = CrudList.new
     @sekolahs = Sekolah.all
+    authorize! :create, @crud_list
   end
 
-  # GET /crud_lists/1/edit
   def edit
-    @crud = CrudList.find(params[:id])
+    @crud_list = CrudList.find(params[:id])
     @sekolahs = Sekolah.all
+    authorize! :update, @crud_list
   end
 
-  # POST /crud_lists or /crud_lists.json
   def create
     @crud_list = CrudList.new(crud_list_params)
-    @sekolahs = Sekolah.all
-   sekolah_id = crud_list_params[:sekolah_id]
+    authorize! :create, @crud_list
 
- 
-
-
-
-    respond_to do |format|
-      if @crud_list.save
-        format.html { redirect_to crud_list_url(@crud_list), notice: "Crud list was successfully created." }
-        format.json { render :show, status: :created, location: @crud_list }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @crud_list.errors, status: :unprocessable_entity }
-      end
+    if @crud_list.save
+      redirect_to @crud_list, notice: 'Crud list was successfully created.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /crud_lists/1 or /crud_lists/1.json
   def update
-    respond_to do |format|
-      if @crud_list.update(crud_list_params)
-        format.html { redirect_to crud_list_url(@crud_list), notice: "Crud list was successfully updated." }
-        format.json { render :show, status: :ok, location: @crud_list }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @crud_list.errors, status: :unprocessable_entity }
-      end
+    @crud_list = CrudList.find(params[:id])
+    authorize! :update, @crud_list
+
+    if @crud_list.update(crud_list_params)
+      redirect_to @crud_list, notice: 'Crud list was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /crud_lists/1 or /crud_lists/1.json
   def destroy
-    @crud_list.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to crud_lists_url, notice: "Crud list was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @crud_list = CrudList.find(params[:id])
+    authorize! :destroy, @crud_list
+    @crud_list.destroy
+    redirect_to crud_lists_url, notice: 'Crud list was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_crud_list
-      @crud_list = CrudList.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def crud_list_params
-      params.require(:crud_list).permit(:first_name, :last_name, :email, :sekolah_id, :jurusan_id )
-    end
+  def crud_list_params
+    params.require(:crud_list).permit(:first_name, :last_name, :email, :sekolah_id, :jurusan_id)
+  end
 end

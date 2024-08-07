@@ -1,49 +1,58 @@
-<%= form_with(model: crud_list) do |form| %>
-  <% if crud_list.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(crud_list.errors.count, "error") %> prohibited this crud_list from being saved:</h2>
-
-      <ul>
-        <% crud_list.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<main class="container  pb-8">
+  <div class="w-[80%] max-w-full mb-6">
+    <div class="border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md bg-gray-900 text-white">
+      <h1 class="text-white text-xl">Tambahkan Murid</h1>
+      <%= form_with(model: crud_list, local: true, class: "space-y-6") do |form| %>
+        <% if crud_list.errors.any? %>
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold"><%= pluralize(crud_list.errors.count, "error") %> prohibited this crud_list from being saved:</strong>
+            <ul class="list-disc list-inside mt-2">
+              <% crud_list.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <br/>
+        <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
+           
+          <div class="col-span-12 lg:col-span-4">
+           
+            <div class="field">
+              <label for="first_name" class="block text-sm font-medium text-white">First Name</label>
+              <%= form.text_field :first_name, id: "first_name", class: "form-input w-full px-3 py-2 border border-gray-300 bg-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:ring-primary focus:border-primary", placeholder: "First Name" %>
+            </div>
 
-  <div class="field form-label">
-   
-    <%= form.text_field :first_name, class:"form-control", placeholder:"FirstName" %>
-  </div>
-  <br/>
+            <div class="field">
+              <label for="last_name" class="block text-sm font-medium text-white">Last Name</label>
+              <%= form.text_field :last_name, id: "last_name", class: "form-input w-full px-3 py-2 border border-gray-300 bg-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:ring-primary focus:border-primary", placeholder: "Last Name" %>
+            </div>
 
-  <div class="field form-label">
-   
-    <%= form.text_field :last_name,  class:"form-control", placeholder:"LastName"  %>
-  </div>
-  <br/>
+            <div class="field">
+              <label for="email" class="block text-sm font-medium text-white">Email</label>
+              <%= form.text_field :email, id: "email", class: "form-input w-full px-3 py-2 border border-gray-300 bg-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:ring-primary focus:border-primary", placeholder: "Email" %>
+            </div>
+          </div>
 
-  <div class="field form-label">
-    
-    <%= form.text_field :email,  class:"form-control", placeholder:"Email"   %>
-  </div>
-  
-    <div class="mb-3">
-    <label for="sekolahSelect" class="form-label"></label>
-    <select id="sekolahSelect" class="form-select" name="crud_list[sekolah_id]">
-      <option>Sekolah dan jurusan</option>
-      <% @sekolahs.each do |sekolah| %>
-        <option value="<%= sekolah.id %>"><%= sekolah.title %> - <%= sekolah.jurusan %></option>
+          <div class="col-span-12 lg:col-span-8">
+            <div class="field">
+              <label for="sekolahSelect" class="block text-sm font-medium text-white">Sekolah dan Jurusan</label>
+              <select id="sekolahSelect" class="form-select w-full mt-1 px-3 py-2 border border-gray-300 bg-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:ring-primary focus:border-primary" name="crud_list[sekolah_id]">
+                <option value="">Select Sekolah dan Jurusan</option>
+                <% @sekolahs.each do |sekolah| %>
+                  <option value="<%= sekolah.id %>"><%= sekolah.title %> - <%= sekolah.jurusan %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+        </div>
+         <div class="flex justify-center space-x-2 mt-4">
+          <a href="<%= crud_lists_path %>" class="gap-6  font-medium text-white hover:bg-white focus:bg-slate-800 active:bg-slate-800/80 dark:border-navy-450 dark:text-navy-100 dark:hover:bg-navy-600 dark:focus:bg-navy-600 dark:active:bg-navy-600/90">Back</a>
+          <%= form.submit "Save", class: "btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90" %>
+        </div>
       <% end %>
-    </select>
+       
+    </div>
+     
   </div>
-  
- 
-  <br/>
-
-  <div>
-    <%= form.submit class:"btn btn-primary" %>
-  </div>
-<% end %>
+</main>

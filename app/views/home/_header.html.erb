@@ -1,33 +1,77 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-   
-  <div class="container-fluid">
-    <%= link_to 'CRUD App', root_path, class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+<div class="fixed left-0 top-0 w-64 h-full bg-gray-900 p-4 z-50 sidebar-menu transition-transform" style="">
+  <a href="#" class="flex items-center pb-4 border-b border-b-gray-800">
+    <span class="text-sm font-bold text-white ml-3">
+       <% if user_signed_in? %>
+      <%= current_user.email %> 
+      
+      <% end %>
+      <!-- Menampilkan username -->
+    </span>
+  </a>
+  <ul class="mt-4">
+    <li class="mb-1 group">
+      <a href="<%= root_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+        <i class="ri-home-2-line mr-3 text-lg"></i>
+        <span class="text-sm">Dashboard</span>
+      </a>
+    </li>
+    <% if can? :read, CrudList %>
+      <li class="mb-1 group">
+        <a href="<%= crud_lists_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-list-check mr-3 text-lg"></i>
+          <span class="text-sm">Show CRUD</span>
+        </a>
+      </li>
+    <% end %>
+    <% if can? :read, Sekolah %>
+      <li class="mb-1 group">
+        <a href="<%= sekolahs_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-school-line mr-3 text-lg"></i>
+          <span class="text-sm">Sekolah</span>
+        </a>
+      </li>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if can? :manage, :all %>
+        <li class="mb-1 group">
+          <a href="<%= projects_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+            <i class="ri-dashboard-line mr-3 text-lg"></i>
+            <span class="text-sm">Admin Dashboard</span>
+          </a>
         </li>
-        <li class="nav-item">
-             <%= link_to 'About', home_about_path, class: "nav-link" %>
-         
+      <% end %>
+      <% if can? :create, CrudList %>
+        <li class="mb-1 group">
+          <a href="<%= new_crud_list_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+            <i class="ri-add-line mr-3 text-lg"></i>
+            <span class="text-sm">Add CRUD</span>
+          </a>
         </li>
-        <li class="nav-item">
-             <%= link_to 'Show CRUD', crud_lists_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-             <%= link_to 'Add CRUD', new_crud_list_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-             <%= link_to 'Sekolah',  sekolahs_path, class: "nav-link" %>
-        </li>
-        
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
+      <% end %>
+      <li class="mb-1 group">
+ 
+  <%= link_to destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?', turbo: false }, class: 'flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md' do %>
+  <i class="ri-logout-box-line mr-3 text-lg"></i>
+  <span class="text-sm">Logout</span>
+<% end %>
+
+</li>
+
+    <% else %>
+      <li class="mb-1 group">
+        <a href="<%= new_user_session_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-login-box-line mr-3 text-lg"></i>
+          <span class="text-sm">Login</span>
+        </a>
+      </li>
+      <li class="mb-1 group">
+        <a href="<%= new_user_registration_path %>" class="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+          <i class="ri-user-add-line mr-3 text-lg"></i>
+          <span class="text-sm">Sign Up</span>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
+
